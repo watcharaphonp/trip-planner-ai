@@ -68,6 +68,7 @@ class TravelTasks:
         """
             ),
             agent=agent,
+            expected_output=""
         )
 
     def identify_city(self, agent, origin, cities, interests, travel_dates):
@@ -93,6 +94,7 @@ class TravelTasks:
         """
             ),
             agent=agent,
+            expected_output=""
         )
 
     def gather_city_info(self, agent, city, travel_dates, interests):
@@ -114,4 +116,5 @@ class TravelTasks:
         """
             ),
             agent=agent,
+            expected_output=""
         )

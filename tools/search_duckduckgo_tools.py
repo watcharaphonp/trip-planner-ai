@@ -3,7 +3,7 @@ import requests
 
 from langchain.tools import tool
 
-class SearchTools():
+class DuckDuckGoSearchTools():
     @tool("Search the internet")
     def search_internet(query):
         """Useful to search the internet

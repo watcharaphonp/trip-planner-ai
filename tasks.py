@@ -65,6 +65,10 @@ class TravelTasks:
             - Traveler Interests: {interests}
 
             **Note**: {self.__tip_section()}
+
+            ** Important **:
+            - Do not stop searching until you find the request information.
+            - Do not generate fake information. Only return the information you find. Nothing else.
         """
             ),
             agent=agent,
@@ -91,6 +95,10 @@ class TravelTasks:
                     - Travel Date: {travel_dates}
 
                     **Note**: {self.__tip_section()}
+
+                    ** Important **:
+                    - Do not stop searching until you find the request information.
+                    - Do not generate fake information. Only return the information you find. Nothing else.
         """
             ),
             agent=agent,
@@ -113,6 +121,10 @@ class TravelTasks:
                     - Travel Date: {travel_dates}
 
                     **Note**: {self.__tip_section()}
+
+                    ** Important **:
+                    - Do not stop searching until you find the request information.
+                    - Do not generate fake information. Only return the information you find. Nothing else.
         """
             ),
             agent=agent,

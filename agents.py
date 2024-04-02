@@ -1,10 +1,20 @@
 from crewai import Agent
 from textwrap import dedent
-from langchain_openai import ChatOpenAI
 
 from tools.search_tools import SearchTools
 from tools.search_duckduckgo_tools import DuckDuckGoSearchTools
 from tools.calculator_tools import CalculatorTools
+
+from langchain_google_genai import ChatGoogleGenerativeAI
+
+from dotenv import load_dotenv
+import os
+from typing import List
+
+from langchain_community.chat_models import ChatLiteLLM
+
+# Load environment variables from .env file
+load_dotenv()
 
 """
 Creating Agents Cheat Sheet:
@@ -35,52 +45,56 @@ Notes:
 
 
 class TravelAgents:
+
     def __init__(self):
-        self.OpenAIGPT35 = ChatOpenAI(
-            model_name="gpt-3.5-turbo", temperature=0.7)
-        
-        
+        # Set LLM
+        self.llm = ChatLiteLLM(model="claude-3-haiku-20240307", max_tokens=1000)
 
     def expert_travel_agent(self):
-        
-        # seachTools = SearchTools
         return Agent(
             role="Expert Travel Agent",
             backstory=dedent(
                 f"""Expert in travel planning and logistics. 
-                I have decades of expereince making travel iteneraries."""),
-            goal=dedent(f"""
-                        Create a 7-day travel itinerary with detailed per-day plans,
+                I have decades of expereince making travel iteneraries."""
+            ),
+            goal=dedent(
+                f"""
+                        Create a travel itinerary with detailed per-day plans,
                         include budget, packing suggestions, and safety tips.
-                        """),
-            tools=[
-                DuckDuckGoSearchTools.search_internet,
-                CalculatorTools.calculate
-            ],
+                        """
+            ),
+            tools=[SearchTools.search_internet, CalculatorTools.calculate],
             verbose=True,
-            llm=self.OpenAIGPT35,
+            llm=self.llm,
         )
 
     def city_selection_expert(self):
         return Agent(
-            role="City Selection Expert",
+            role="City Selection Expert Agent",
             backstory=dedent(
-                f"""Expert at analyzing travel data to pick ideal destinations"""),
+                f"""Expert at analyzing travel data to pick ideal destinations"""
+            ),
             goal=dedent(
-                f"""Select the best cities based on weather, season, prices, and traveler interests"""),
-            tools=[DuckDuckGoSearchTools.search_internet],
+                f"""Select the best cities based on weather, season, prices, and traveler interests"""
+            ),
+            tools=[
+                SearchTools.search_internet,
+            ],
             verbose=True,
-            llm=self.OpenAIGPT35,
+            llm=self.llm,
         )
 
     def local_tour_guide(self):
         return Agent(
-            role="Local Tour Guide",
-            backstory=dedent(f"""Knowledgeable local guide with extensive information
-        about the city, it's attractions and customs"""),
-            goal=dedent(
-                f"""Provide the BEST insights about the selected city"""),
-            tools=[DuckDuckGoSearchTools.search_internet],
+            role="Local Tour Guide Agent",
+            backstory=dedent(
+                f"""Knowledgeable local guide with extensive information
+        about the city, it's attractions and customs"""
+            ),
+            goal=dedent(f"""Provide the BEST insights about the selected city"""),
+            tools=[
+                SearchTools.search_internet,
+            ],
             verbose=True,
-            llm=self.OpenAIGPT35,
+            llm=self.llm,
         )

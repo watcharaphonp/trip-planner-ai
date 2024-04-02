@@ -1,5 +1,9 @@
-from crewai import Task
+from crewai import Task, Agent
 from textwrap import dedent
+from job_manager import append_task_output, append_event
+from utils.logging import logger
+import markdown
+import json
 
 """
 Creating Tasks Cheat Sheet:
@@ -45,15 +49,21 @@ Key Steps for Task Creation:
 
 
 class TravelTasks:
-    def __tip_section(self):
-        return "If you do your BEST WORK, I'll give you a $10,000 commission!"
+    def __init__(self, job_id):
+        self.job_id = job_id
+
+    def append_event_callback(self, task_name, task_output):
+        logger.info("Callback called: %s", task_output)
+        append_event(self.job_id, task_output.exported_output)
+        append_task_output(self.job_id, task_output.exported_output, task_name)
 
     def plan_itinerary(self, agent, city, travel_dates, interests):
+        task_name = "plan_itinerary"
         return Task(
             description=dedent(
                 f"""
-            **Task**: Develop a 7-Day Travel Itinerary
-            **Description**: Expand the city guide into a full 7-day travel itinerary with detailed 
+            **Task**: Develop a Travel Itinerary
+            **Description**: Expand the city guide into a travel itinerary with detailed 
                 per-day plans, including weather forecasts, places to eat, packing suggestions, 
                 and a budget breakdown. You MUST suggest actual places to visit, actual hotels to stay, 
                 and actual restaurants to go to. This itinerary should cover all aspects of the trip, 
@@ -63,19 +73,17 @@ class TravelTasks:
             - City: {city}
             - Trip Date: {travel_dates}
             - Traveler Interests: {interests}
-
-            **Note**: {self.__tip_section()}
-
-            ** Important **:
-            - Do not stop searching until you find the request information.
-            - Do not generate fake information. Only return the information you find. Nothing else.
         """
             ),
             agent=agent,
-            expected_output=""
+            expected_output=dedent("""Text"""),
+            callback=lambda task_output: self.append_event_callback(
+                task_name, task_output
+            ),
         )
 
     def identify_city(self, agent, origin, cities, interests, travel_dates):
+        task_name = "identify_city"
         return Task(
             description=dedent(
                 f"""
@@ -93,19 +101,17 @@ class TravelTasks:
                     - Cities: {cities}
                     - Interests: {interests}
                     - Travel Date: {travel_dates}
-
-                    **Note**: {self.__tip_section()}
-
-                    ** Important **:
-                    - Do not stop searching until you find the request information.
-                    - Do not generate fake information. Only return the information you find. Nothing else.
-        """
+                """
             ),
             agent=agent,
-            expected_output=""
+            expected_output=dedent("""Text"""),
+            callback=lambda task_output: self.append_event_callback(
+                task_name, task_output
+            ),
         )
 
     def gather_city_info(self, agent, city, travel_dates, interests):
+        task_name = "gather_city_info"
         return Task(
             description=dedent(
                 f"""
@@ -119,14 +125,11 @@ class TravelTasks:
                     - Cities: {city}
                     - Interests: {interests}
                     - Travel Date: {travel_dates}
-
-                    **Note**: {self.__tip_section()}
-
-                    ** Important **:
-                    - Do not stop searching until you find the request information.
-                    - Do not generate fake information. Only return the information you find. Nothing else.
-        """
+                """
             ),
             agent=agent,
-            expected_output=""
+            expected_output=dedent("""Text"""),
+            callback=lambda task_output: self.append_event_callback(
+                task_name, task_output
+            ),
         )

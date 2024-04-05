@@ -18,7 +18,26 @@ By [@joaomdmoura](https://x.com/joaomdmoura).
    or
    ```make i```
 
-5. Run
+## Start LiteLLM Proxy
+1. Open your terminal
+
+2. Activate virtual environment by running the following command in your terminal
+   ```source "venv"/bin/activate```
+   
+3. Start LiteLLM proxy by running the following command in your terminal 
+   ```litellm```
+   
+4.You will see the url `http://localhost:4000` (default port is `4000`)
+
+
+## Start Trip Planner Services
+1. Open your terminal
+
+2. Activate virtual environment by running the following command in your terminal
+   ```source "venv"/bin/activate```
+Run
    ```make run```
    or
    ```make r```
+
+3.You will see the url `http://localhost:3001` (default port is `3001`)

@@ -5,19 +5,20 @@ This is a collection of examples of different ways to use the crewAI framework t
 By [@joaomdmoura](https://x.com/joaomdmoura).
 
 ## Setup
+1. Create file `.env` and add the same variables as the `.env.example` file
 
-1. Prepare environment
+2. Prepare environment
    ```make prepare```
 
-2. Activate virtual environment
+3. Activate virtual environment
    ```source "venv"/bin/activate```
 
-3. Install dependencies
+4. Install dependencies
    ```make install```
    or
    ```make i```
 
-4. Run
+5. Run
    ```make run```
    or
    ```make r```

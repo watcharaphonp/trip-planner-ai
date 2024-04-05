@@ -14,8 +14,6 @@ By [@joaomdmoura](https://x.com/joaomdmoura).
    ```source "venv"/bin/activate```
 
 4. Install dependencies
-   ```make install```
-   or
    ```make i```
 
 ## Start LiteLLM Proxy
@@ -35,9 +33,8 @@ By [@joaomdmoura](https://x.com/joaomdmoura).
 
 2. Activate virtual environment by running the following command in your terminal
    ```source "venv"/bin/activate```
-Run
-   ```make run```
-   or
+   
+3. Start Trip Planner Services by running the following command in your terminal
    ```make r```
 
-3.You will see the url `http://localhost:3001` (default port is `3001`)
+4. You will see the url `http://localhost:3001` (default port is `3001`)

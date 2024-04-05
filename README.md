@@ -14,7 +14,7 @@ By [@joaomdmoura](https://x.com/joaomdmoura).
 
 4. Activate virtual environment
    ```
-   source "venv"/bin/activate
+   source venv/bin/activate
    ```
 
 6. Install dependencies
@@ -27,7 +27,7 @@ By [@joaomdmoura](https://x.com/joaomdmoura).
 
 2. Activate virtual environment by running the following command in your terminal
    ```
-   source "venv"/bin/activate
+   source venv/bin/activate
    ```
    
 4. Start LiteLLM proxy by running the following command in your terminal 
@@ -43,7 +43,7 @@ By [@joaomdmoura](https://x.com/joaomdmoura).
 
 2. Activate virtual environment by running the following command in your terminal
    ```
-   source "venv"/bin/activate
+   source venv/bin/activate
    ```
    
 4. Start Trip Planner Services by running the following command in your terminal

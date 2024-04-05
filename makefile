@@ -21,9 +21,7 @@ activate:
 	source $(ENV_NAME)/bin/activate
 
 deactivate:
-	source $(ENV_NAME)/bin/deactivate
-
-u.poetry: pipx upgrade poetry
+	deactivate
 
 run: r
 r:
@@ -34,6 +32,3 @@ i:
 	poetry config warnings.export false
 	poetry export --without-hashes -f $(DEPENDENCIES_FILE_NAME) -o $(DEPENDENCIES_FILE_NAME)
 	pip install --no-cache-dir -r $(DEPENDENCIES_FILE_NAME)
-
-f:
-	pip freeze >> requirements.txt

@@ -3,18 +3,10 @@ model_list:
     litellm_params:
       model: gpt-3.5-turbo
 
-  - model_name: gpt-4-turbo-preview
-    litellm_params:
-      model: gpt-4-turbo-preview
-
   - model_name: claude-3-haiku-20240307
     litellm_params:
       model: claude-3-haiku-20240307
       api_key: "os.environ/ANTHROPIC_API_KEY"
-      timeout: 10 # timeout in (seconds)
-      stream_timeout: 10 # timeout for stream requests (seconds)
-      max_retries: 3
-      rpm: 3
 
   - model_name: nim/mixtral-8x7b-instruct-v0.1
     litellm_params:
@@ -22,25 +14,15 @@ model_list:
       api_base: https://integrate.api.nvidia.com/v1
       api_key: "os.environ/NVIDIA_API_KEY"
 
-  - model_name: hf/mixtral-8x7b-instruct-v0.1
+  - model_name: gemini/gemini-1.0-pro
     litellm_params:
-      model: huggingface/mistralai/Mixtral-8x7B-Instruct-v0.1 # prefix compatible's model with openai/
-      api_base: https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1
-      api_key: "os.environ/HF_TOKEN"
-
-  - model_name: hf/mistralai/Mistral-7B-Instruct-v0.2
-    litellm_params:
-      model: huggingface/mistralai/Mistral-7B-Instruct-v0.2
-      api_base: https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2
-      api_key: "os.environ/HF_TOKEN"
-
-  - model_name: hf/HuggingFaceH4/zephyr-7b-beta
-    litellm_params:
-      model: huggingface/HuggingFaceH4/zephyr-7b-beta
-      api_base: https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta
-      api_key: "os.environ/HF_TOKEN"
+      model: gemini/gemini-1.0-pro
+      api_key: "os.environ/GEMINI_API_KEY"
 
 litellm_settings:
+  set_verbose: True
+  cache: True
   num_retries: 3
-  request_timeout: 20
+  request_timeout: 10
+  fallbacks: [{ "claude-3-haiku-20240307": ["gemini/gemini-1.0-pro"] }]
   allowed_fails: 3

@@ -24,6 +24,7 @@ langchain = "^0.1.13"
 langchain-community = "^0.0.29"
 duckduckgo-search = "^5.2.1"
 litellm = {extras = ["proxy"], version = "^1.34.18"}
+bs4 = "^0.0.2"
 
 [tool.pyright]
 # https://github.com/microsoft/pyright/blob/main/docs/configuration.md

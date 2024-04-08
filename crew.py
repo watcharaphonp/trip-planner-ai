@@ -17,27 +17,24 @@ class TripCrew:
         tasks = TravelTasks(job_id=self.job_id)
 
         # Define your custom agents and tasks here
-        expert_travel_agent = agents.expert_travel_agent()
-        city_selection_expert = agents.city_selection_expert()
-        local_tour_guide = agents.local_tour_guide()
+        city_selector_agent = agents.city_selection_agent()
+        local_expert_agent = agents.local_expert()
+        travel_concierge_agent = agents.travel_concierge()
 
-        identify_city = tasks.identify_city(
-            city_selection_expert, origin, cities, interests, date_range
+        identify_task = tasks.identify_task(
+            city_selector_agent, origin, cities, interests, date_range
         )
-
-        gather_city_info = tasks.gather_city_info(
-            local_tour_guide, cities, date_range, interests
+        gather_task = tasks.gather_task(
+            local_expert_agent, origin, interests, date_range
         )
-
-        plan_itinerary = tasks.plan_itinerary(
-            expert_travel_agent, cities, date_range, interests
+        plan_task = tasks.plan_task(
+            travel_concierge_agent, origin, interests, date_range
         )
 
         self.crew = Crew(
-            agents=[expert_travel_agent, city_selection_expert, local_tour_guide],
-            tasks=[plan_itinerary, identify_city, gather_city_info],
+            agents=[city_selector_agent, local_expert_agent, travel_concierge_agent],
+            tasks=[identify_task, gather_task, plan_task],
             verbose=True,
-            process=Process.sequential,
         )
 
     def kickoff(self):

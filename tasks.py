@@ -30,13 +30,13 @@ class TravelTasks:
             Traveler Interests: {interests}"""
             ),
             agent=agent,
-            expected_output=dedent("""Markdown"""),
+            expected_output=dedent("""Markdown that highlights topics in bold"""),
             callback=lambda task_output: self.append_event_callback(
                 task_name, task_output
             ),
         )
 
-    def gather_task(self, agent, origin, interests, range):
+    def gather_task(self, agent, origin, cities, interests, range):
         task_name = "gather_task"
         return Task(
             description=dedent(
@@ -54,16 +54,17 @@ class TravelTasks:
 
             Trip Date: {range}
             Traveling from: {origin}
+            City Options: {cities}
             Traveler Interests: {interests}"""
             ),
             agent=agent,
-            expected_output=dedent("""Markdown"""),
+            expected_output=dedent("""Markdown that highlights topics in bold"""),
             callback=lambda task_output: self.append_event_callback(
                 task_name, task_output
             ),
         )
 
-    def plan_task(self, agent, origin, interests, range):
+    def plan_task(self, agent, origin, cities, interests, range):
         task_name = "plan_task"
         return Task(
             description=dedent(
@@ -81,10 +82,11 @@ class TravelTasks:
 
             Trip Date: {range}
             Traveling from: {origin}
+            City Options: {cities}
             Traveler Interests: {interests} """
             ),
             agent=agent,
-            expected_output=dedent("""Markdown"""),
+            expected_output=dedent("""Markdown that highlights topics in bold"""),
             callback=lambda task_output: self.append_event_callback(
                 task_name, task_output
             ),
@@ -94,10 +96,8 @@ class TravelTasks:
         return "If you do your BEST WORK, I'll tip you $100!"
 
     def __important(self):
-        return f"""**Important**:
+        return f"""To do this task, you understand the following rules:
         1. Find weather information from searching the internet using the word that start with \"Accuweather\" and appending it with the city name and month for which you want to know weather information only. Then use the first result from the first url as your final answer.
-    
         2. If weather information is not found, You must continue to search and provide information on other topics without considering the weather information.
-        
-        3. Weather data must be shared between agents. There will be no redundant searches for weather information.
+        3. All information such as weather, special events and best place to visit must be shared between agents. There will be no duplicate searches on the internet for existing data.
         """

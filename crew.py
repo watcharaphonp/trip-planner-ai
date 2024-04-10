@@ -25,10 +25,10 @@ class TripCrew:
             city_selector_agent, origin, cities, interests, date_range
         )
         gather_task = tasks.gather_task(
-            local_expert_agent, origin, interests, date_range
+            local_expert_agent, origin, cities, interests, date_range
         )
         plan_task = tasks.plan_task(
-            travel_concierge_agent, origin, interests, date_range
+            travel_concierge_agent, origin, cities, interests, date_range
         )
 
         self.crew = Crew(

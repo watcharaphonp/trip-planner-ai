@@ -1,7 +1,6 @@
 from crewai import Agent
 from tools.search_duckduckgo_tools import DuckDuckGoSearchTools
 from tools.web_scraper_tools import WebScraperTools
-from tools.search_weather_info_tools import WeatherSearchTools
 from tools.calculator_tools import CalculatorTools
 from configs.model import Models
 
@@ -22,12 +21,11 @@ class TravelAgents:
             tools=[
                 DuckDuckGoSearchTools.search_internet,
                 WebScraperTools.scrape_and_summarize_website,
-                WeatherSearchTools.summarize_weather_info_from_web,
             ],
             llm=self.llm,
             verbose=True,
-            max_rpm=self.max_rpm,
-            max_iter=self.max_iter,
+            # max_rpm=self.max_rpm,
+            # max_iter=self.max_iter,
             allow_delegation=True,
         )
 
@@ -39,12 +37,11 @@ class TravelAgents:
             tools=[
                 DuckDuckGoSearchTools.search_internet,
                 WebScraperTools.scrape_and_summarize_website,
-                WeatherSearchTools.summarize_weather_info_from_web,
             ],
             llm=self.llm,
             verbose=True,
-            max_rpm=self.max_rpm,
-            max_iter=self.max_iter,
+            # max_rpm=self.max_rpm,
+            # max_iter=self.max_iter,
             allow_delegation=True,
         )
 
@@ -57,11 +54,10 @@ class TravelAgents:
                 DuckDuckGoSearchTools.search_internet,
                 WebScraperTools.scrape_and_summarize_website,
                 CalculatorTools.calculate,
-                WeatherSearchTools.summarize_weather_info_from_web,
             ],
             llm=self.llm,
             verbose=True,
-            max_rpm=self.max_rpm,
-            max_iter=self.max_iter,
+            # max_rpm=self.max_rpm,
+            # max_iter=self.max_iter,
             allow_delegation=True,
         )

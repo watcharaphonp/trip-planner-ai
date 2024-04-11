@@ -8,7 +8,7 @@ from configs.model import Models
 class TravelAgents:
 
     def __init__(self):
-        self.model_configs = Models.claude3Haiku()
+        self.model_configs = Models.bedrockHaiku()
         self.llm = self.model_configs["model"]
         self.max_rpm = self.model_configs["max_rpm"]
         self.max_iter = self.model_configs["max_iter"]
@@ -24,8 +24,8 @@ class TravelAgents:
             ],
             llm=self.llm,
             verbose=True,
-            # max_rpm=self.max_rpm,
-            # max_iter=self.max_iter,
+            max_rpm=self.max_rpm,
+            max_iter=self.max_iter,
             allow_delegation=True,
         )
 
@@ -40,8 +40,8 @@ class TravelAgents:
             ],
             llm=self.llm,
             verbose=True,
-            # max_rpm=self.max_rpm,
-            # max_iter=self.max_iter,
+            max_rpm=self.max_rpm,
+            max_iter=self.max_iter,
             allow_delegation=True,
         )
 
@@ -57,7 +57,7 @@ class TravelAgents:
             ],
             llm=self.llm,
             verbose=True,
-            # max_rpm=self.max_rpm,
-            # max_iter=self.max_iter,
+            max_rpm=self.max_rpm,
+            max_iter=self.max_iter,
             allow_delegation=True,
         )

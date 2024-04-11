@@ -45,6 +45,7 @@ class TripCrew:
         append_event(self.job_id, "Task Started")
         try:
             results = self.crew.kickoff()
+            print(self.crew.usage_metrics)
             append_event(self.job_id, "Task Complete")
             return str(results)
         except Exception as e:

@@ -1,7 +1,5 @@
-import requests
 from langchain.tools import tool
 from crewai import Agent, Task
-from bs4 import BeautifulSoup
 from configs.model import Models
 from textwrap import dedent
 
@@ -13,7 +11,7 @@ class WebScraperTools:
         """Scrapes and summarizes a website's content according to given topics from website url"""
         summaries = []
 
-        model_configs = Models.claude3Haiku()
+        model_configs = Models.bedrockHaiku()
         llm = model_configs["model"]
         max_rpm = model_configs["max_rpm"]
         max_iter = model_configs["max_iter"]

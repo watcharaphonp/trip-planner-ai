@@ -7,21 +7,16 @@ model_list:
     litellm_params:
       model: claude-3-haiku-20240307
       api_key: "os.environ/ANTHROPIC_API_KEY"
-
-  - model_name: nim/mixtral-8x7b-instruct-v0.1
-    litellm_params:
-      model: openai/mistralai/mixtral-8x7b-instruct-v0.1 # prefix compatible's model with openai/
-      api_base: https://integrate.api.nvidia.com/v1
-      api_key: "os.environ/NVIDIA_API_KEY"
+      rpm: 5
 
   - model_name: gemini/gemini-1.0-pro
     litellm_params:
       model: gemini/gemini-1.0-pro
       api_key: "os.environ/GEMINI_API_KEY"
 
-litellm_settings:
-  set_verbose: True
-  cache: True
-  num_retries: 3
-  request_timeout: 10
-  allowed_fails: 3
+  - model_name: bedrock/anthropic.claude-3-haiku-20240307-v1:0
+    litellm_params:
+      model: bedrock/anthropic.claude-3-haiku-20240307-v1:0
+
+general_settings:
+  master_key: "os.environ/LITELLM_MASTER_KEY"

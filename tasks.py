@@ -97,7 +97,7 @@ class TravelTasks:
 
     def __important(self):
         return f"""To do this task, you understand the following rules:
-        1. Find weather information from searching the internet using the word that start with \"Accuweather\" and appending it with the city name and month for which you want to know weather information only. Then use the first result from the first url as your final answer.
+        1. Find weather information from searching the internet using the word that start with \"Accuweather\" and appending it with the city name and month for which you want to know weather information. Then use the first result from the first url as your final answer.
         2. If weather information is not found, You must continue to search and provide information on other topics without considering the weather information.
         3. All information such as weather, special events and best place to visit must be shared between agents. There will be no duplicate searches on the internet for existing data.
         """

@@ -2,6 +2,7 @@ from crewai import Agent
 from tools.search_duckduckgo_tools import DuckDuckGoSearchTools
 from tools.web_scraper_tools import WebScraperTools
 from tools.calculator_tools import CalculatorTools
+from tools.sky_scanner_tools import SkyScannerTools
 from configs.model import Models
 
 
@@ -21,6 +22,7 @@ class TravelAgents:
             tools=[
                 DuckDuckGoSearchTools.search_internet,
                 WebScraperTools.scrape_and_summarize_website,
+                SkyScannerTools.summarize_flight_info,
             ],
             llm=self.llm,
             verbose=True,
@@ -36,6 +38,7 @@ class TravelAgents:
             tools=[
                 DuckDuckGoSearchTools.search_internet,
                 WebScraperTools.scrape_and_summarize_website,
+                SkyScannerTools.summarize_flight_info,
             ],
             llm=self.llm,
             verbose=True,
@@ -52,6 +55,7 @@ class TravelAgents:
                 DuckDuckGoSearchTools.search_internet,
                 WebScraperTools.scrape_and_summarize_website,
                 CalculatorTools.calculate,
+                SkyScannerTools.summarize_flight_info,
             ],
             llm=self.llm,
             verbose=True,

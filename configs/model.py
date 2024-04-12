@@ -43,8 +43,8 @@ class Models:
                 temperature=0.1,
                 model_kwargs={
                     "metadata": {
-                        "trace_user_id": "user-id5",  # set langfuse Trace User ID
-                        "session_id": "session-5",  # set langfuse Session ID
+                        "trace_user_id": "user-id15",  # set langfuse Trace User ID
+                        "session_id": "session-15",  # set langfuse Session ID
                         "tags": ["tag1", "tag2"],
                     }
                 },

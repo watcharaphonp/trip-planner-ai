@@ -26,7 +26,6 @@ class TravelAgents:
             verbose=True,
             max_rpm=self.max_rpm,
             max_iter=self.max_iter,
-            allow_delegation=True,
         )
 
     def local_expert(self):
@@ -42,7 +41,6 @@ class TravelAgents:
             verbose=True,
             max_rpm=self.max_rpm,
             max_iter=self.max_iter,
-            allow_delegation=True,
         )
 
     def travel_concierge(self):
@@ -59,5 +57,4 @@ class TravelAgents:
             verbose=True,
             max_rpm=self.max_rpm,
             max_iter=self.max_iter,
-            allow_delegation=True,
         )

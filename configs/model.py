@@ -4,22 +4,46 @@ from langchain_community.chat_models import ChatLiteLLM
 
 # from langchain_community.embeddings import BedrockEmbeddings
 import litellm
+import time
 
 litellm.success_callback = ["langfuse"]
 
 
 class Models:
-    def claude3Haiku():
+    def gemini(user_id):
+        return {
+            "model": ChatLiteLLM(
+                model="gemini/gemini-pro",
+                model_kwargs={
+                    "metadata": {
+                        "trace_user_id": f"{user_id}",  # set langfuse Trace User ID
+                        "session_id": f"{str(time.time())}-{user_id}",  # set langfuse Session ID
+                        "tags": ["tag1", "tag2"],
+                    }
+                },
+            ),
+            "max_rpm": None,
+            "max_iter": 15,
+        }
+
+    def claude3Haiku(user_id):
         return {
             "model": ChatLiteLLM(
                 model="claude-3-haiku-20240307",
                 max_tokens=4096,
+                model_kwargs={
+                    "metadata": {
+                        "trace_user_id": f"{user_id}",  # set langfuse Trace User ID
+                        "session_id": f"{str(time.time())}-{user_id}",  # set langfuse Session ID
+                        "tags": ["tag1", "tag2"],
+                    }
+                },
             ),
             "max_rpm": 5,
             "max_iter": 15,
         }
 
-    def bedrockHaiku():
+    def bedrockHaiku(user_id):
         # bedrock_runtime = boto3.client(
         #     service_name="bedrock-runtime", region_name="us-east-1"
         # )
@@ -43,12 +67,12 @@ class Models:
                 temperature=0.1,
                 model_kwargs={
                     "metadata": {
-                        "trace_user_id": "user-id15",  # set langfuse Trace User ID
-                        "session_id": "session-15",  # set langfuse Session ID
+                        "trace_user_id": f"{user_id}",  # set langfuse Trace User ID
+                        "session_id": f"session-{user_id}",  # set langfuse Session ID
                         "tags": ["tag1", "tag2"],
                     }
                 },
             ),
-            "max_rpm": 10,
+            "max_rpm": None,
             "max_iter": 15,
         }

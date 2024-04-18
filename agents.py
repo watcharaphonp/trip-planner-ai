@@ -8,8 +8,8 @@ from configs.model import Models
 
 class TravelAgents:
 
-    def __init__(self):
-        self.model_configs = Models.bedrockHaiku()
+    def __init__(self, user_id):
+        self.model_configs = Models.bedrockHaiku(user_id)
         self.llm = self.model_configs["model"]
         self.max_rpm = self.model_configs["max_rpm"]
         self.max_iter = self.model_configs["max_iter"]

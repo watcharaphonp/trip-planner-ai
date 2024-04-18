@@ -7,13 +7,14 @@ from crewai import Crew, Process
 
 
 class TripCrew:
-    def __init__(self, job_id: str):
+    def __init__(self, job_id: str, user_id: str):
         self.job_id = job_id
+        self.user_id = user_id
         self.crew = None
 
     def setup_crew(self, origin, cities, date_range, interests):
         # Define your custom agents and tasks in agents.py and tasks.py
-        agents = TravelAgents()
+        agents = TravelAgents(user_id=self.user_id)
         tasks = TravelTasks(job_id=self.job_id)
 
         # Define your custom agents and tasks here

@@ -5,13 +5,15 @@ from textwrap import dedent
 
 
 class WebScraperTools:
+    def __init__(self, user_id):
+        self.user_id = user_id
 
     @tool("Scrape website content")
-    def scrape_and_summarize_website(website_url, topic):
+    def scrape_and_summarize_website(self, website_url, topic):
         """Scrapes and summarizes a website's content according to given topics from website url"""
         summaries = []
 
-        model_configs = Models.bedrockHaiku()
+        model_configs = Models.bedrockHaiku(self.user_id)
         llm = model_configs["model"]
         max_rpm = model_configs["max_rpm"]
         max_iter = model_configs["max_iter"]

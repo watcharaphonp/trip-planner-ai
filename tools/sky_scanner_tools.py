@@ -5,12 +5,18 @@ from textwrap import dedent
 
 
 class SkyScannerTools:
+    def __init__(self, user_id):
+        self.user_id = user_id
 
     @tool(
         "Search, scrapping content and summarize flight information from SkyScanner Website"
     )
     def summarize_flight_info(
-        departure_airport_code, destination_airport_code, arrival_date, return_date
+        self,
+        departure_airport_code,
+        destination_airport_code,
+        arrival_date,
+        return_date,
     ):
         """Scrapping and summarizes flight information from SkyScanner Website according to following parameters
         departure_airport_code: Departure Airport Code such as BKK
@@ -22,7 +28,7 @@ class SkyScannerTools:
         website_url = f"https://www.skyscanner.net/transport/flights/{departure_airport_code}/{destination_airport_code}/{arrival_date}/{return_date}"
         summaries = []
 
-        model_configs = Models.bedrockHaiku()
+        model_configs = Models.bedrockHaiku(self.user_id)
         llm = model_configs["model"]
         max_rpm = model_configs["max_rpm"]
         max_iter = model_configs["max_iter"]

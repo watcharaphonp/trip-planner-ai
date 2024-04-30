@@ -6,15 +6,22 @@ from tasks import TravelTasks
 from crewai import Crew, Process
 
 
+class CrewResponse:
+    def __init__(self, data: str, metrics: dict | None):
+        self.data = data
+        self.metrics = metrics
+
+
 class TripCrew:
-    def __init__(self, job_id: str, user_id: str):
+    def __init__(self, job_id: str, user_id: str, session_id: str):
         self.job_id = job_id
         self.user_id = user_id
+        self.session_id = session_id
         self.crew = None
 
     def setup_crew(self, origin, cities, date_range, interests):
         # Define your custom agents and tasks in agents.py and tasks.py
-        agents = TravelAgents(user_id=self.user_id)
+        agents = TravelAgents(user_id=self.user_id, session_id=self.session_id)
         tasks = TravelTasks(job_id=self.job_id)
 
         # Define your custom agents and tasks here
@@ -41,14 +48,13 @@ class TripCrew:
     def kickoff(self):
         if not self.crew:
             append_event(self.job_id, "Crew not set up")
-            return "Crew not set up"
+            return CrewResponse("Crew not set up", None)
 
         append_event(self.job_id, "Task Started")
         try:
             results = self.crew.kickoff()
-            print(self.crew.usage_metrics)
             append_event(self.job_id, "Task Complete")
-            return str(results)
+            return CrewResponse(results, self.crew.usage_metrics)
         except Exception as e:
             append_event(self.job_id, f"An error occurred: {e}")
-            return str(e)
+            return CrewResponse(str(e), None)

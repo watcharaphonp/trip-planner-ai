@@ -27,6 +27,7 @@ class Job:
     status: str
     events: List[Event]
     result: str
+    metrics: dict | None
     taskOutput: List[TaskOutput]
 
 
@@ -34,7 +35,9 @@ def append_event(job_id: str, event_data: Any):
     with jobs_lock:
         if job_id not in jobs:
             logger.info("Job %s started", job_id)
-            jobs[job_id] = Job(status="STARTED", events=[], taskOutput=[], result="")
+            jobs[job_id] = Job(
+                status="STARTED", events=[], taskOutput=[], result="", metrics=None
+            )
         else:
             logger.info("Appending event for job %s/ Data: %s", job_id, event_data)
 

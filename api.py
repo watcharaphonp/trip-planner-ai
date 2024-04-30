@@ -21,15 +21,15 @@ app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 
-def kickoff_crew(job_id, user_id, origin, cities, date_range, interests):
+def kickoff_crew(job_id, user_id, session_id, origin, cities, date_range, interests):
     logger.info(f"Crew for job {job_id} is starting")
 
-    results = None
+    crew_response = None
     try:
-        trip_planner_crew = TripCrew(job_id, user_id)
+        trip_planner_crew = TripCrew(job_id, user_id, session_id)
         trip_planner_crew.setup_crew(origin, cities, date_range, interests)
-        results = trip_planner_crew.kickoff()
-        logger.info(f"Crew for job {job_id} is complete", results)
+        crew_response = trip_planner_crew.kickoff()
+        logger.info(f"Crew for job {job_id} is complete", crew_response.data)
         # Handle the error as needed
 
     except Exception as e:
@@ -40,7 +40,8 @@ def kickoff_crew(job_id, user_id, origin, cities, date_range, interests):
     with jobs_lock:
         if job_id in jobs:
             jobs[job_id].status = "COMPLETE"
-            jobs[job_id].result = results
+            jobs[job_id].result = crew_response.data
+            jobs[job_id].metrics = crew_response.metrics
             jobs[job_id].events.append(
                 Event(timestamp=datetime.now(), data="Crew complete")
             )
@@ -63,6 +64,7 @@ def run_crew():
 
     job_id = str(uuid4())
     user_id = str(data["user_id"])
+    session_id = str(data["session_id"])
     origin = data["origin"]
     cities = data["cities"]
     date_range = data["date_range"]
@@ -70,7 +72,7 @@ def run_crew():
 
     thread = Thread(
         target=kickoff_crew,
-        args=(job_id, user_id, origin, cities, date_range, interests),
+        args=(job_id, user_id, session_id, origin, cities, date_range, interests),
     )
     thread.start()
 
@@ -96,6 +98,7 @@ def get_status(job_id):
             "job_id": job_id,
             "status": job.status,
             "result": result_json,
+            "metrics": job.metrics,
             "events": [
                 {"timestamp": event.timestamp.isoformat(), "data": event.data}
                 for event in job.events

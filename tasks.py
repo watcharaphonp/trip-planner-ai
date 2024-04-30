@@ -17,18 +17,18 @@ class TravelTasks:
         task_name = "identify_task"
         return Task(
             description=dedent(
-                f"""Analyze and select the best city for the trip based on specific criteria such as weather patterns, seasonal events, and travel costs. This task involves comparing multiple cities, considering factors like current weather conditions, upcoming cultural or seasonal events, and overall travel expenses. Your final answer must be a detailed report on the chosen city, and everything you found out about it, including the actual flight costs, weather forecast and attractions.
+                f"""Analyze and select the best city for the trip based on specific criteria such as weather patterns, seasonal events, and travel costs. This task involves comparing multiple cities, considering factors like current weather conditions, upcoming cultural or seasonal events, and overall travel expenses. Your final answer must be a detailed report on the chosen city, and everything you found out about it, including the flight information such as flight cost, airline options, flight duration, weather forecast and attractions.
 
                 Traveling from: {origin}
                 City Options: {cities}
                 Trip Date: {range}
                 Traveler Interests: {interests}
                 
-                {self.__important()}
+                {self.__important(cities)}
                 """
             ),
             agent=agent,
-            expected_output=dedent("""Markdown that highlights topics in bold"""),
+            expected_output=dedent("""Markdown"""),
             callback=lambda task_output: self.append_event_callback(
                 task_name, task_output
             ),
@@ -45,11 +45,11 @@ class TravelTasks:
                 City Options: {cities}
                 Traveler Interests: {interests}
                 
-                {self.__important()}
+                {self.__important(cities)}
                 """
             ),
             agent=agent,
-            expected_output=dedent("""Markdown that highlights topics in bold"""),
+            expected_output=dedent("""Markdown"""),
             callback=lambda task_output: self.append_event_callback(
                 task_name, task_output
             ),
@@ -66,19 +66,20 @@ class TravelTasks:
                 City Options: {cities}
                 Traveler Interests: {interests}
                 
-                {self.__important()}
+                {self.__important(cities)}
                 """
             ),
             agent=agent,
-            expected_output=dedent("""Markdown that highlights topics in bold"""),
+            expected_output=dedent("""Markdown"""),
             callback=lambda task_output: self.append_event_callback(
                 task_name, task_output
             ),
         )
 
-    def __important(self):
+    def __important(self, cities):
         return f"""To do this task, you understand the following instruction:
         1. If you want to find an information about weather you can searching the internet using the word that start with \"Accuweather\" and appending it with the city name and month for which you want to know weather information.
-        2. You can use the popular websites such as \"Wanderlog\" or \"TripAdvisor\" to find many information about that city in the month you visited.
-        3. Output only the full detail, without any additional comments
+        2. You can use the popular websites such as \"Wanderlog\" or \"TripAdvisor\" to find many information about that city in the month you visited. For Example \"Wanderlog - {cities} in August\".
+        3. Output only the full detail, without any additional comments.
+        4. Your content topic should highlight with bold text.
         """

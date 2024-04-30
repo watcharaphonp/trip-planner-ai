@@ -3,20 +3,53 @@ from crewai import Agent, Task
 from configs.model import Models
 from textwrap import dedent
 
+# import requests
+# from bs4 import BeautifulSoup
+
 
 class WebScraperTools:
-    def __init__(self, user_id):
-        self.user_id = user_id
+    global_user_id = ""
+    global_session_id = ""
+
+    def __init__(self, user_id, session_id):
+        global global_user_id
+        global global_session_id
+        global_user_id = user_id
+        global_session_id = session_id
 
     @tool("Scrape website content")
-    def scrape_and_summarize_website(self, website_url, topic):
+    def scrape_and_summarize_website(website_url, topic):
         """Scrapes and summarizes a website's content according to given topics from website url"""
         summaries = []
 
-        model_configs = Models.bedrockHaiku(self.user_id)
+        model_configs = Models.bedrockHaiku(global_user_id, global_session_id)
         llm = model_configs["model"]
         max_rpm = model_configs["max_rpm"]
         max_iter = model_configs["max_iter"]
+
+        # response = requests.get(website_url)
+
+        # # Parse the HTML content of the webpage
+        # soup = BeautifulSoup(response.content, "html.parser")
+
+        # # Find all image elements
+        # image_tags = soup.find_all("img")
+
+        # # Extract the src attribute (URL) and alt attribute (label) from each image element
+        # image_info = [
+        #     {"url": img["src"], "label": img.get("alt", "No label")}
+        #     for img in image_tags
+        # ]
+
+        # # Create formatted string for image info
+        # formatted_info = "\n".join(
+        #     [
+        #         f"Image URL: {info['url']}, Image Label: {info['label']}"
+        #         for info in image_info
+        #     ]
+        # )
+
+        # print(formatted_info)
 
         agent = Agent(
             role="Principal Researcher",

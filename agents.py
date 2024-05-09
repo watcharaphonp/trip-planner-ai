@@ -4,6 +4,7 @@ from tools.web_scraper_tools import WebScraperTools
 from tools.calculator_tools import CalculatorTools
 from tools.sky_scanner_tools import SkyScannerTools
 from configs.model import Models
+from tools.image_search_tools import ImageSearchTools
 
 
 class TravelAgents:
@@ -45,6 +46,20 @@ class TravelAgents:
                 DuckDuckGoSearchTools.search_internet,
                 webScraperTools.scrape_and_summarize_website,
                 skyScannerTools.summarize_flight_info,
+            ],
+            llm=self.llm,
+            verbose=True,
+            max_rpm=self.max_rpm,
+            max_iter=self.max_iter,
+        )
+
+    def image_search_expert(self):
+        return Agent(
+            role="Image search expert",
+            goal="Provide the BEST images for the city guide information from local expert at this city",
+            backstory="""A knowledgeable about searching for photos from the Bing Image Search.""",
+            tools=[
+                ImageSearchTools.search_image,
             ],
             llm=self.llm,
             verbose=True,

@@ -3,9 +3,6 @@ from crewai import Agent, Task
 from configs.model import Models
 from textwrap import dedent
 
-# import requests
-# from bs4 import BeautifulSoup
-
 
 class WebScraperTools:
     global_user_id = ""
@@ -19,37 +16,13 @@ class WebScraperTools:
 
     @tool("Scrape website content")
     def scrape_and_summarize_website(website_url, topic):
-        """Scrapes and summarizes a website's content according to given topics from website url"""
+        """Scrapes and summarizes a website's content according to given topics from website url *** You CANNOT use this tool to search images ***"""
         summaries = []
 
         model_configs = Models.bedrockHaiku(global_user_id, global_session_id)
         llm = model_configs["model"]
         max_rpm = model_configs["max_rpm"]
         max_iter = model_configs["max_iter"]
-
-        # response = requests.get(website_url)
-
-        # # Parse the HTML content of the webpage
-        # soup = BeautifulSoup(response.content, "html.parser")
-
-        # # Find all image elements
-        # image_tags = soup.find_all("img")
-
-        # # Extract the src attribute (URL) and alt attribute (label) from each image element
-        # image_info = [
-        #     {"url": img["src"], "label": img.get("alt", "No label")}
-        #     for img in image_tags
-        # ]
-
-        # # Create formatted string for image info
-        # formatted_info = "\n".join(
-        #     [
-        #         f"Image URL: {info['url']}, Image Label: {info['label']}"
-        #         for info in image_info
-        #     ]
-        # )
-
-        # print(formatted_info)
 
         agent = Agent(
             role="Principal Researcher",

@@ -28,6 +28,7 @@ bs4 = "^0.0.2"
 boto3 = "^1.34.80"
 googlesearch-python = "^1.2.3"
 langfuse = "^2.24.0"
+bing-images = "^0.2.3"
 
 [tool.pyright]
 # https://github.com/microsoft/pyright/blob/main/docs/configuration.md

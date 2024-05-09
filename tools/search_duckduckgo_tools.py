@@ -7,8 +7,9 @@ from langchain.tools import tool
 class DuckDuckGoSearchTools:
     @tool("Search the internet")
     def search_internet(query):
-        """Useful to search the internet
-        about a given topic and return relevant results"""
+        """Useful to search the internet about a given topic and return relevant results *** You CANNOT use this tool to search images ***"""
+        if query == None:
+            return "Sorry, Please provide a query"
         top_result_to_return = 4
         url = "https://api.duckduckgo.com/"
         params = {"q": query, "format": "json"}
@@ -19,6 +20,10 @@ class DuckDuckGoSearchTools:
 
         results = response.json()["RelatedTopics"]
         string = []
+
+        if not results:
+            print("The results is empty")
+
         for result in results[:top_result_to_return]:
             try:
                 string.append(

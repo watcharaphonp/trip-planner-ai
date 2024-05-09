@@ -35,10 +35,10 @@ class TravelTasks:
         )
 
     def gather_task(self, agent, origin, cities, interests, range):
-        task_name = "gather_task"
+        # task_name = "gather_task"
         return Task(
             description=dedent(
-                f"""As a local expert on this city you must compile an in-depth guide for someone traveling there and wanting to have THE BEST trip ever!. Gather information about  key attractions, local customs, special events, and daily activity recommendations. Find the best spots to go to, the kind of place only a local would know. This guide should provide a thorough overview of what the city has to offer, including hidden gems, cultural hotspots, must-visit landmarks, weather forecasts, and high level costs. The final answer must be a comprehensive city guide, rich in cultural insights and practical tips, tailored to enhance the travel experience.
+                f"""As a local expert on this city you must compile a city guide information for someone traveling there and wanting to have THE BEST trip ever!. Gather information about top attractions, local customs, special events, and daily activity recommendations. Find the best spots to go to, the kind of place only a local would know. This guide should provide a thorough overview of what the city has to offer, including hidden gems, cultural hotspots, must-visit landmarks, weather forecasts, and high level costs. The final answer must be a comprehensive city guide, rich in cultural insights and practical tips, tailored to enhance the travel experience.
 
                 Trip Date: {range}
                 Traveling from: {origin}
@@ -46,10 +46,24 @@ class TravelTasks:
                 Traveler Interests: {interests}
                 
                 {self.__important(cities)}
-                """
+                5. You CANNOT provide images in your answer."""
             ),
             agent=agent,
             expected_output=dedent("""Markdown"""),
+        )
+
+    def illustrate_task(self, agent):
+        task_name = "gather_task"
+        return Task(
+            description=dedent(
+                f"""As an Image search expert You are expert in searching for the best images from \"Bing Image Search\". You MUST take all city guide information from Local Expert at this city and update it following the rules below.
+                1. You MUST search and insert the image of each item in the list of \"Top Attractions\" from \"Bing Image Search\". *** Only one image per item ***.
+                2. Do not insert anything to the item that you cannot find the image from \"Bing Image Search\" for it.
+                3. You final answer MUST contain the full detail of city guide information that you received from local expert.
+                """
+            ),
+            agent=agent,
+            expected_output=dedent("""Markdown with text and images"""),
             callback=lambda task_output: self.append_event_callback(
                 task_name, task_output
             ),
@@ -66,8 +80,7 @@ class TravelTasks:
                 City Options: {cities}
                 Traveler Interests: {interests}
                 
-                {self.__important(cities)}
-                """
+                {self.__important(cities)}"""
             ),
             agent=agent,
             expected_output=dedent("""Markdown"""),

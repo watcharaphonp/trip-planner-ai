@@ -43,8 +43,8 @@ class Models:
         return {
             "model": ChatLiteLLM(
                 model=model_id,
-                max_tokens=2048,
-                temperature=0.1,
+                max_tokens=4096,
+                temperature=0.9,
                 model_kwargs={
                     "metadata": {
                         "trace_user_id": f"{user_id}",

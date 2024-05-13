@@ -45,8 +45,7 @@ class TravelTasks:
                 City Options: {cities}
                 Traveler Interests: {interests}
                 
-                {self.__important(cities)}
-                5. You CANNOT provide images in your answer."""
+                {self.__important(cities)}"""
             ),
             agent=agent,
             expected_output=dedent("""Markdown"""),
@@ -58,8 +57,8 @@ class TravelTasks:
             description=dedent(
                 f"""As an Image search expert You are expert in searching for the best images from \"Bing Image Search\". You MUST take all city guide information from Local Expert at this city and update it following the rules below.
                 1. You MUST search and insert the image of each item in the list of \"Top Attractions\" from \"Bing Image Search\". *** Only one image per item ***.
-                2. Do not insert anything to the item that you cannot find the image from \"Bing Image Search\" for it.
-                3. You final answer MUST contain the full detail of city guide information that you received from local expert.
+                2. If you cannot find the image from \"Bing Image Search\" for some item, You don't need to do anything with it and don't ask some other expert to help you to search for it and go to the next item.
+                3. You final answer MUST contain the full detail of city guide information that you received from local expert. If not, you MUST repeat your task again.
                 """
             ),
             agent=agent,
@@ -92,7 +91,8 @@ class TravelTasks:
     def __important(self, cities):
         return f"""To do this task, you understand the following instruction:
         1. If you want to find an information about weather you can searching the internet using the word that start with \"Accuweather\" and appending it with the city name and month for which you want to know weather information.
-        2. You can use the popular websites such as \"Wanderlog\" or \"TripAdvisor\" to find many information about that city in the month you visited. For Example \"Wanderlog - {cities} in August\".
+        2. If you cannot ask for information from another agent, You can use the popular websites such as \"Wanderlog\" or \"TripAdvisor\" to find many information about that city in the month you visited. For Example \"Wanderlog - {cities} in August\".
         3. Output only the full detail, without any additional comments.
         4. Your content topic should highlight with bold text.
+        5. You CANNOT provide images in your answer.
         """

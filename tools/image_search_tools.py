@@ -24,34 +24,33 @@ class ImageSearchTools:
         for anchor_iusc in soup.find_all("a", class_="iusc"):
             if anchor_iusc.get("m"):
                 m_value = anchor_iusc.get("m")
-                style_value = anchor_iusc.get("style")
-                img_width = 0
+                style_attr = anchor_iusc.get("style")
+                img_width = 1
                 img_height = 0
                 url: str = ""
                 label: str = ""
 
                 m_dict = json.loads(m_value)
-                dimensions_list = style_value.split(";")
+                label = m_dict.get("t")
                 url = m_dict.get("murl")
+
+                if style_attr and "height" in style_attr and "width" in style_attr:
+                    img_height = int(
+                        style_attr.split(";")[0].split(":")[1].replace("px", "")
+                    )
+                    img_width = int(
+                        style_attr.split(";")[1].split(":")[1].replace("px", "")
+                    )
 
                 # validate if the url can be accessed
                 try:
-                    response = requests.get(url, timeout=3)
+                    response = requests.get(url, timeout=7)
                     if response.status_code != 200:
                         continue
                 except requests.Timeout:
                     continue
                 except requests.RequestException as e:
                     continue
-
-                for dimension in dimensions_list:
-                    key, value = dimension.split(":")
-                    if key == "height":
-                        img_height = int(value.replace("px", ""))
-                    elif key == "width":
-                        img_width = int(value.replace("px", ""))
-
-                    label = m_dict.get("t")
 
                 def check_banned(url):
                     url_ban_list = [
@@ -76,7 +75,7 @@ class ImageSearchTools:
                     # validate url format
                     and url.startswith("https://")
                     # check image size
-                    and img_width > 200
+                    # and img_width > 200
                     and img_height < img_width
                     # validate file type
                     and (".jpg" in url or ".jpeg" in url or ".png" in url)

@@ -25,7 +25,7 @@ deactivate:
 
 run: r
 r:
-	python3 api.py
+	python3 app.py
 
 install: i
 i:

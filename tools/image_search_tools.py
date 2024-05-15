@@ -42,48 +42,28 @@ class ImageSearchTools:
                         style_attr.split(";")[1].split(":")[1].replace("px", "")
                     )
 
-                # validate if the url can be accessed
-                try:
-                    response = requests.get(url, timeout=7)
-                    if response.status_code != 200:
-                        continue
-                except requests.Timeout:
-                    continue
-                except requests.RequestException as e:
-                    continue
-
-                def check_banned(url):
-                    url_ban_list = [
-                        "wikimedia.org",
-                        "imgur.com",
-                        "example.com",
-                        "via.placeholder.com",
-                        "live.staticflickr.com",
-                    ]
-
-                    for item in url_ban_list:
-                        if item in url:
-                            return True
-                        else:
-                            return False
-
                 if (
-                    # check ban list
-                    # not check_banned(url)
                     # check if the label contains the query
                     query in label
                     # validate url format
                     and url.startswith("https://")
                     # check image size
-                    # and img_width > 200
                     and img_height < img_width
                     # validate file type
                     and (".jpg" in url or ".jpeg" in url or ".png" in url)
                     and not url.endswith(".svg")
                 ):
+                    # validate if the url can be accessed
+                    # try:
+                    #     response = requests.get(url, timeout=5)
+                    #     if response.status_code != 200:
+                    #         continue
+                    # except requests.Timeout:
+                    #     continue
+                    # except requests.RequestException as e:
+                    #     continue
+
                     image_urls.append(url)
-                    # break
-                    # return url
                 else:
                     continue
 
@@ -93,5 +73,4 @@ class ImageSearchTools:
         if len(image_urls) == 0:
             return "Cannot find any image from Bing Image Search"
 
-        # return image_urls[random.randint(0, len(image_urls) - 1)]
         return image_urls
